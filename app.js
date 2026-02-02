@@ -1,18 +1,23 @@
 const express = require('express');
-require('./src/database/db');
+const { cadastrarProduto, listarProdutos, buscarProdutoPorId, atualizarProduto, deletarProduto } = require('./src/controllers/produtosController');
 
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
 
-// rota base (teste)
+// Rota de teste
 app.get('/', (req, res) => {
-  res.send('API de Controle de Estoque rodando!');
+  res.status(200).send('API de Controle de Estoque rodando!');
 });
 
-// futuras rotas vão entrar aqui
+// CRUD de produtos
+app.post('/produtos', cadastrarProduto);
+app.get('/produtos', listarProdutos);
+app.get('/produtos/:id', buscarProdutoPorId);
+app.put('/produtos/:id', atualizarProduto);
+app.delete('/produtos/:id', deletarProduto);
 
 app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+  console.log(`Servidor rodando em http://localhost:${PORT}/`);
 });
