@@ -1,13 +1,18 @@
-const http = require('http');
+const express = require('express');
+require('./src/database/db');
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
-
-  res.end('Olá, Mundo!');
-});
-
+const app = express();
 const PORT = 3000;
 
-server.listen(PORT, () => {
+app.use(express.json());
+
+// rota base (teste)
+app.get('/', (req, res) => {
+  res.send('API de Controle de Estoque rodando!');
+});
+
+// futuras rotas vão entrar aqui
+
+app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
