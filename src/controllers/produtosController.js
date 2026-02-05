@@ -50,9 +50,22 @@ const atualizarProduto = (req, res) => {
   const { id } = req.params;
   const { nome, codigo_barras, descricao, quantidade, categoria, data_validade, imagem } = req.body;
 
-  if (!nome || !codigo_barras || !descricao || !categoria) {
-    return res.status(400).json({ erro: 'Campos obrigatórios ausentes!' });
-  }
+  if (!nome || nome.trim() === '') {
+  return res.status(400).json({ erro: 'Nome é obrigatório!' });
+}
+
+if (!codigo_barras || codigo_barras.trim() === '') {
+  return res.status(400).json({ erro: 'Código de barras é obrigatório!' });
+}
+
+if (quantidade === undefined || quantidade === null || quantidade < 0) {
+  return res.status(400).json({ erro: 'Quantidade inválida!' });
+}
+
+if (!categoria || categoria.trim() === '') {
+  return res.status(400).json({ erro: 'Categoria é obrigatória!' });
+}
+
 
   const sql = `UPDATE produtos SET 
     nome = ?, codigo_barras = ?, descricao = ?, quantidade = ?, categoria = ?, data_validade = ?, imagem = ? 
